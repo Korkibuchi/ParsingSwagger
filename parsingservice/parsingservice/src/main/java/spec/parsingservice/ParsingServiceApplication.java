@@ -8,7 +8,6 @@ class ParsingServiceApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(ParsingServiceApplication.class).run(args);
         System.out.println("heello");
-//        XmlParserPro pro = new XmlParserPro();
-//        pro.xmlParser();
+
     }
 }

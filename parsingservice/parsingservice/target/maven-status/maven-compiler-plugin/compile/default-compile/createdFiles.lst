@@ -1,7 +1,6 @@
 spec\parsingservice\handler\parser\Parseable.class
 spec\parsingservice\handler\parser\XmlParser.class
 spec\parsingservice\provider\xml\StaxProvider.class
-spec\parsingservice\XmlParserPro.class
 spec\parsingservice\config\SwaggerConfig.class
 spec\parsingservice\util\XmlUtils.class
 spec\parsingservice\handler\context\Context.class
@@ -11,6 +10,7 @@ spec\parsingservice\exception\ParseException.class
 spec\parsingservice\handler\context\Contextable.class
 spec\parsingservice\protocol\ParseResponse.class
 spec\parsingservice\util\StringUtils.class
+spec\parsingservice\handler\parser\ParserInt.class
 spec\parsingservice\ParsingServiceApplication.class
 spec\parsingservice\service\ParseService.class
 spec\parsingservice\controller\ParserController.class

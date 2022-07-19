@@ -1,5 +1,6 @@
 package spec.parsingservice.controller;
 
+import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,17 +26,16 @@ final class ParserController {
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ParseResponse> parse(final @RequestParam("data") MultipartFile data) {
+    public ResponseEntity parse(final @RequestParam("data") MultipartFile data) {
         log.info("module=ParserController, method=parse, action=POST, uri=/api/parser, data.Name={}, data.Size={}",
                 data.getName(), data.getSize());
 
         try {
-            parseService.parse(data);
-            ResponseEntity resp;
-            resp = new ResponseEntity<>("hello Mikhail", HttpStatus.OK);
-            System.out.println(data.toString());
-            
-            return resp;
+            ParseResponse resp = new ParseResponse();
+            resp.setLst(parseService.parse(data));
+            resp.setStt(HttpStatus.OK);
+           
+            return  new ResponseEntity<>(resp.getLst(), resp.getStt());
         } catch(Exception e) {
             log.error("module=ParserController, method=parse, action=POST, uri=/api/parser, error.Message={}",
                     e.getLocalizedMessage());

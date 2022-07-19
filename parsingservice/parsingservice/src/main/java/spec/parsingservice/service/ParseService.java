@@ -1,7 +1,8 @@
 package spec.parsingservice.service;
 
+import java.util.ArrayList;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ParseService {
-    void parse(MultipartFile data);
+    ArrayList parse(MultipartFile data);
 }
