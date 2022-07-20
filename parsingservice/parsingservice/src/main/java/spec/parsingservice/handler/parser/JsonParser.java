@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 import spec.parsingservice.handler.SourceType;
+import spec.parsingservice.provider.xml.JackosonProvider;
 
 
 
@@ -21,8 +22,8 @@ public class JsonParser implements ParserInt{
     public ArrayList<String> parse(MultipartFile data, Enum<SourceType> type){
         ArrayList list = new ArrayList();
         try {      
-            com.fasterxml.jackson.core.JsonParser jParser = new JsonFactory()
-                    .createParser(data.getInputStream());
+            JackosonProvider jack = new JackosonProvider(data.getInputStream());
+            com.fasterxml.jackson.core.JsonParser jParser = jack.getjParser();
             
             StringBuilder str = new StringBuilder();
             jParser.nextToken();
