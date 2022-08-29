@@ -2,6 +2,7 @@ package spec.parsingservice.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import spec.parsingservice.handler.parser.XmlParser;
 
 @AllArgsConstructor
 public enum SourceType {
@@ -13,5 +14,6 @@ public enum SourceType {
     CSV("CSV"),
     HTML("HTML");
 
-    @Getter private final String code;
+    @Getter
+    private final String code;
 }

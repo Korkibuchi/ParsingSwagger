@@ -5,9 +5,11 @@
 package spec.parsingservice.handler.parser;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 import spec.parsingservice.handler.SourceType;
 
 public interface ParserInt {
-    public ArrayList<String> parse(MultipartFile data, Enum<SourceType> type);
+    List<String> parse();
 }

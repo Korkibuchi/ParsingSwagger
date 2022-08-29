@@ -1,32 +1,45 @@
+
 package spec.parsingservice.handler.parser;
 
-import java.io.IOException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import spec.parsingservice.handler.context.Contextable;
-import spec.parsingservice.provider.xml.StaxProvider;
+import spec.parsingservice.service.impl.ParseServiceImpl;
+
+import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.events.XMLEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
-import spec.parsingservice.handler.SourceType;
-import spec.parsingservice.service.impl.ParseServiceImpl;
 
 
-@Repository
+@Service
 
-public class XmlParser implements  Contextable, ParserInt {
+public class XmlParser implements  Contextable, AutoCloseable {
 
-    @Override
-    public ArrayList<String> parse(MultipartFile data, Enum<SourceType> type) {
-        ArrayList<String> lst = new ArrayList();          
+    private XMLStreamReader reader;
+
+    public static XmlParser newInstance(MultipartFile data){
+        final XmlParser parser= new XmlParser();
+        final XMLInputFactory FACTORY = XMLInputFactory.newInstance();
         try {
-            final StaxProvider proXml = new StaxProvider(data.getInputStream());
-            final XMLStreamReader reader = proXml.getReader();
-            
+            parser.reader= FACTORY.createXMLStreamReader(data.getInputStream());
+        } catch (XMLStreamException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        return parser;}
+
+
+    public List parse() {
+        List lst = new ArrayList();
+        try {
             Stack<String> st = new Stack<>();
         boolean flag = false, flagtext= false;
         
@@ -70,7 +83,7 @@ public class XmlParser implements  Contextable, ParserInt {
             }   
         
          
-        } catch (IOException | XMLStreamException ex) {
+        } catch (XMLStreamException ex) {
             Logger.getLogger(ParseServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lst;
@@ -80,9 +93,11 @@ public class XmlParser implements  Contextable, ParserInt {
         
     }
 
-    
 
-    
-
-    
+    @Override
+    public void close() throws Exception {
+        if (reader != null){
+            reader.close();
+        }
+    }
 }
